@@ -14,6 +14,15 @@ BOT_NAME = 'getpics'
 SPIDER_MODULES = ['getpics.spiders']
 NEWSPIDER_MODULE = 'getpics.spiders'
 
+ITEM_PIPELINES = {
+	# 'getpics.pipelines.GetpicsPipeline': 1,
+	'scrapy.contrib.pipeline.images.ImagesPipeline': 1
+	}
+IMAGES_STORE = 'D:\getpics\pictures'
+IMAGES_MIN_HEIGHT = 110
+IMAGES_MIN_WIDTH = 110
+
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'getpics (+http://www.yourdomain.com)'

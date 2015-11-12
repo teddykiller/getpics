@@ -5,10 +5,12 @@
 # See documentation in:
 # http://doc.scrapy.org/en/latest/topics/items.html
 
-import scrapy
+from scrapy import Item,Field
 
 
-class GetpicsItem(scrapy.Item):
+class GetpicsItem(Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    pass
+    image_paths = Field()
+    image_urls = Field()
+    images = Field()
