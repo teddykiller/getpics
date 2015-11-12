@@ -16,7 +16,8 @@ NEWSPIDER_MODULE = 'getpics.spiders'
 
 ITEM_PIPELINES = {
 	# 'getpics.pipelines.GetpicsPipeline': 1,
-	'scrapy.contrib.pipeline.images.ImagesPipeline': 1
+	'scrapy.contrib.pipeline.images.ImagesPipeline': 1,
+	'getpics.pipelines.JsonWritePipeline':1,
 	}
 IMAGES_STORE = 'D:\getpics\pictures'
 IMAGES_MIN_HEIGHT = 110
