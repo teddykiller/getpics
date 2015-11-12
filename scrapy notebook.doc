@@ -1,4 +1,4 @@
-将item写入JSON文件
+//write the item to json file
 
 import json
 
