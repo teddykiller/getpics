@@ -1,7 +1,7 @@
 # encoding=utf-8
-import sys
-reload(sys)
-sys.setdefaultencoding('gb2312')
+# import sys
+# reload(sys)
+# sys.setdefaultencoding('gb2312')
 import scrapy
 from getpics.items import GetpicsItem
 
@@ -16,6 +16,9 @@ class MySpider(scrapy.Spider):
 	def parse(self, response):
 		for sel in response.xpath('//div[@class="bbslistone"]'):
 			item = GetpicsItem()
-			item['image_urls'] = sel.xpath('a/img/@src').extract()
-			item['image_paths'] = sel.xpath('div/a/text()').extract()
+			item['image_urls'] = sel.xpath('a/img/@src').extract()[0]
+			item['image_paths'] = sel.xpath('div/a/text()').extract()[0]
 			yield item
+
+	def parse_item(self, response):
+		pass

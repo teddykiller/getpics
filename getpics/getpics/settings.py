@@ -15,13 +15,25 @@ SPIDER_MODULES = ['getpics.spiders']
 NEWSPIDER_MODULE = 'getpics.spiders'
 
 ITEM_PIPELINES = {
-	# 'getpics.pipelines.GetpicsPipeline': 1,
-	'scrapy.contrib.pipeline.images.ImagesPipeline': 1,
+	# 'scrapy.contrib.pipeline.images.ImagesPipeline': 3,#默认的图片通道
+	# 'getpics.pipelines.MyImagesPipeline':3,#定制的图片通道
+	# 'getpics.pipelines.CreatFloderPipeline':2,
 	'getpics.pipelines.JsonWritePipeline':1,
+	# 'getpics.pipelines.GetpicsPipeline':1,
+	'getpics.pipelines.MongoWritePipeline':2
 	}
-IMAGES_STORE = 'D:\getpics\pictures'
+IMAGES_STORE = '..\pictures'
 IMAGES_MIN_HEIGHT = 110
 IMAGES_MIN_WIDTH = 110
+
+USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:39.0) Gecko/20100101 Firefox/39.0'
+COOKIES_ENABLED = True
+
+MONGODB_HOST = '127.0.0.1'
+MONGODB_PORT = 27017
+MONGODB_DBNAME = 'kook'
+MONGODB_DOCNAME = 'Post'
+
 
 
 
