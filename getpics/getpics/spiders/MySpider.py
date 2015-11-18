@@ -16,8 +16,10 @@ class MySpider(scrapy.Spider):
 	def parse(self, response):
 		for sel in response.xpath('//div[@class="bbslistone"]'):
 			item = GetpicsItem()
-			item['image_urls'] = sel.xpath('a/img/@src').extract()[0]
-			item['image_paths'] = sel.xpath('div/a/text()').extract()[0]
+			# item['image_urls'] = sel.xpath('a/img/@src').extract()[0]
+			# item['image_paths'] = sel.xpath('div/a/text()').extract()[0]
+			item['title'] = sel.xpath('div[@class="bbslistone_name"]/a/text()').extract()[0]
+			item['title_url'] = sel.xpath('a/@href').extract()[0]
 			yield item
 
 	def parse_item(self, response):

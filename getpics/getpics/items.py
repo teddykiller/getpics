@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 # Define here the models for your scraped items
 #
@@ -11,6 +10,13 @@ from scrapy import Item,Field
 class GetpicsItem(Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    image_paths = Field()
-    image_urls = Field()
-    images = Field()
+    # main page
+	title = Field()
+	title_url = Field()
+	# second page
+	subject = Field()
+
+	author = Field()
+	author_url = Field()
+	image_urls = Field()
+	images = Field()
