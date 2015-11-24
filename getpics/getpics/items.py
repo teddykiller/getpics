@@ -14,9 +14,14 @@ class GetpicsItem(Item):
 	title = Field()
 	title_url = Field()
 	# second page
-	subject = Field()
-
-	author = Field()
-	author_url = Field()
+	# author = Field()
+	# author_url = Field()
 	image_urls = Field()
 	images = Field()
+
+
+
+# class GetTitleItem(Item):
+
+# 	title = Field()
+# 	title_url = Field()

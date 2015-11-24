@@ -13,7 +13,7 @@ import os
 from scrapy.pipelines.images import ImagesPipeline
 from scrapy.exceptions import DropItem
 from scrapy.conf import settings
-import pymongo
+# import pymongo
 from scrapy import log
 
 
@@ -59,6 +59,7 @@ class MongoWritePipeline(object):
 		postInfo = dict(item)
 		self.post.insert(postInfo)
 		return item	
+		
 # class MyImagesPipeline(ImagesPipeline):
 
 # 	def get_media_requests(self, item, info):

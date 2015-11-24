@@ -14,8 +14,11 @@ class MySpider(scrapy.Spider):
 	start_urls = [
 		"http://www.8264.com/list/871/"
 	]
-	download_delay = 2
+	# download_delay = 2
+
+
 	def parse(self, response):
+		items = []
 		for sel in response.xpath('//div[@class="bbslistone"]'):
 			item = GetpicsItem()
 			# item['image_urls'] = sel.xpath('a/img/@src').extract()[0]
@@ -32,24 +35,36 @@ class MySpider(scrapy.Spider):
 				log.msg("fecth title_url failed")
 				continue
 			item['title_url'] = title_url
-			yield Request(item['title_url'], callback=self.parse_item, meta={'item':item})
-			# yield item
+			items.append(item)
+		for item in items:
+			# yield Request(item['title_url'], callback=self.parse_item, meta={'item':item})
+			yield item
+
 
 
 
 	def parse_item(self, response):
 		# 获得由parse传来的item
-		item = response.meta['item']
+		# item = response.meta['item']
 		# 抓取image_urls
 		# print response.body
-		for sel in response.xpath('//div[@class="lxch_new clboth"]'):
-			# item = GetpicsItem()
-			image_urls = sel.xpath('//td[@class="t_f"]/img/@src').extract()
-			if len(image_urls) == 0:
-				log.msg("there is no pics in the topic {--" + item['title'] + '--}')
+
+
+		for sel in response.xpath('//div[@class="t_fsz_new "]'):
+
+			# image_urls = sel.xpath('//img[@class="zoom"]/@file').extract()
+			for img in sel.xpath('//img[@class="zoom"]/@file'):
+				print img
+				item =GetpicsItem()
+				img_url = img.extract()
+				if len(img_url) == 0:
+					log.msg("there is no pics in the topic ")
 				return
-			item['image_urls'] = image_urls
-			yield item
+				
+				item['image_urls'] = img_url
+				yield item
+
+
 
 		# 抓取author
 		# author
