@@ -16,6 +16,7 @@ from scrapy.conf import settings
 # import pymongo
 from scrapy import log
 import hashlib
+from getpics.sucess import sucess
 
 
 
@@ -83,4 +84,5 @@ class MyImagesPipeline(ImagesPipeline):
 	def item_completed(self, results, item, info):
 		image_paths = [x['path'] for ok, x in results if ok]
 		item['image_paths'] = image_paths
+		sucess()
 		return item
