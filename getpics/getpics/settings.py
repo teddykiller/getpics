@@ -26,7 +26,7 @@ IMAGES_STORE = '..\pictures'
 IMAGES_MIN_HEIGHT = 110
 IMAGES_MIN_WIDTH = 110
 
-# USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:39.0) Gecko/20100101 Firefox/39.0'
+USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:39.0) Gecko/20100101 Firefox/39.0'
 COOKIES_ENABLED = False
 
 # MONGODB_HOST = '127.0.0.1'

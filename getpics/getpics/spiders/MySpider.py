@@ -3,7 +3,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 import scrapy
-from getpics.items import GetpicsItem
+from getpics.items import GetpicsItem, GetTitleItem
 from scrapy import log
 from scrapy.http import Request
 
@@ -14,13 +14,13 @@ class MySpider(scrapy.Spider):
 	start_urls = [
 		"http://www.8264.com/list/871/"
 	]
-	# download_delay = 2
+	download_delay = 2
 
 
 	def parse(self, response):
 		items = []
 		for sel in response.xpath('//div[@class="bbslistone"]'):
-			item = GetpicsItem()
+			item = GetTitleItem()
 			# item['image_urls'] = sel.xpath('a/img/@src').extract()[0]
 			# item['image_paths'] = sel.xpath('div/a/text()').extract()[0]
 			# 抓取title
@@ -36,9 +36,12 @@ class MySpider(scrapy.Spider):
 				continue
 			item['title_url'] = title_url
 			items.append(item)
-		for item in items:
-			# yield Request(item['title_url'], callback=self.parse_item, meta={'item':item})
-			yield item
+			yield Request(item['title_url'], callback=self.parse_item, meta={'item':item})
+			# yield item 
+		# for item in items:
+		# 	yield Request(item['title_url'], callback=self.parse_item, meta={'item':item})
+		# 	yield Request(item['title_url'], callback=self.parse_item)
+		# 	yield item
 
 
 
@@ -51,15 +54,13 @@ class MySpider(scrapy.Spider):
 
 
 		for sel in response.xpath('//div[@class="t_fsz_new "]'):
-
-			# image_urls = sel.xpath('//img[@class="zoom"]/@file').extract()
 			for img in sel.xpath('//img[@class="zoom"]/@file'):
-				print img
+
 				item =GetpicsItem()
 				img_url = img.extract()
 				if len(img_url) == 0:
 					log.msg("there is no pics in the topic ")
-				return
+					return
 				
 				item['image_urls'] = img_url
 				yield item

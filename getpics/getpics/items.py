@@ -21,7 +21,7 @@ class GetpicsItem(Item):
 
 
 
-# class GetTitleItem(Item):
+class GetTitleItem(Item):
 
-# 	title = Field()
-# 	title_url = Field()
+	title = Field()
+	title_url = Field()
