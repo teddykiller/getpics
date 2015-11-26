@@ -15,14 +15,13 @@ from scrapy.exceptions import DropItem
 from scrapy.conf import settings
 # import pymongo
 from scrapy import log
+import hashlib
+
 
 
 class GetpicsPipeline(object):
 	pass
 
-class EncodePipeline(object):
-	def process_item(self, item, spider):
-		pass
 
 class JsonWritePipeline(object):
 
@@ -42,8 +41,11 @@ class CreatFloderPipeline(object):
 
 	def process_item(self, item, spider):
 		for title in item['title']:
-			os.mkdir("../pictures/" + title)
-			log.msg("sucess creat folder " + title.encode('utf-8'))
+			img_path = "../pictures/" + title.encode('utf-8')
+			if not os.path.exists(img_path):
+				# print '-'*100	
+				os.mkdir(img_path)
+				log.msg("sucess creat folder " + img_path)
 
 		return item
 
@@ -60,11 +62,25 @@ class MongoWritePipeline(object):
 		self.post.insert(postInfo)
 		return item	
 		
-# class MyImagesPipeline(ImagesPipeline):
+class MyImagesPipeline(ImagesPipeline):
+	def file_path(self, request, response=None, info=None):
+		url = request.url
+		image_guid = hashlib.sha1(url).hexdigest()
+		return 'full/%s/%s.jpg' % (image_guid[:-2], image_guid)
 
-# 	def get_media_requests(self, item, info):
-# 		for image_url in item['image_urls']:
-# 			yield scrapy.Request(image_url)
+	def thumb_path(self, request,thumb_id, response=None, info=None):
+		url = request.url
+		thumb_guid = hashlib.sha1(url).hexdigest()
+		return 'thumb/%s/%s.jpg' % (thumb_guid[:-2], thumb_guid)
 
-# 	def item_completed(self, results, item, info):
-# 		pass
+	# def get_images(self, response, request, info):
+	# 	pass
+
+	def get_media_requests(self, item, info):
+		for image_url in item['image_urls']:
+			yield scrapy.Request(image_url)
+
+	def item_completed(self, results, item, info):
+		image_paths = [x['path'] for ok, x in results if ok]
+		item['image_paths'] = image_paths
+		return item

@@ -37,7 +37,7 @@ class MySpider(scrapy.Spider):
 			item['title_url'] = title_url
 			items.append(item)
 			yield Request(item['title_url'], callback=self.parse_item, meta={'item':item})
-			# yield item 
+
 		# for item in items:
 		# 	yield Request(item['title_url'], callback=self.parse_item, meta={'item':item})
 		# 	yield Request(item['title_url'], callback=self.parse_item)
@@ -54,15 +54,19 @@ class MySpider(scrapy.Spider):
 
 
 		for sel in response.xpath('//div[@class="t_fsz_new "]'):
-			for img in sel.xpath('//img[@class="zoom"]/@file'):
+			for img in sel.xpath('//img[@class="zoom"]'):
 
 				item =GetpicsItem()
-				img_url = img.extract()
+				img_url = img.xpath('@file').extract()
 				if len(img_url) == 0:
 					log.msg("there is no pics in the topic ")
 					return
-				
+				title = img.xpath('@title').extract()
+				if len(title) == 0:
+					log.msg("the pic has no title")
+					return
 				item['image_urls'] = img_url
+				item['title'] = title
 				yield item
 
 

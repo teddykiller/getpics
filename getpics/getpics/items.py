@@ -12,12 +12,13 @@ class GetpicsItem(Item):
     # name = scrapy.Field()
     # main page
 	title = Field()
-	title_url = Field()
+
 	# second page
 	# author = Field()
 	# author_url = Field()
 	image_urls = Field()
 	images = Field()
+	image_paths = Field()
 
 
 
